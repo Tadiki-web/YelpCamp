@@ -6,7 +6,13 @@ const User = require('./user')
 
 const CampgroundSchema= new Schema({
     title: String,
-    image: String,
+    images: [
+        {
+            url: String,
+            filename: String
+        }
+        
+    ],
     price: Number,
     description: String,
     location: String,
