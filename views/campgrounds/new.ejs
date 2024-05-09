@@ -18,7 +18,7 @@
                 <input class="form-control" type="text" name="campground[image]" id="image" required>
             </div> -->
             <div class="mb-3">
-                <label for="price">Campground Price</label>
+                <label class="form-label" for="price">Campground Price</label>
                 <div class="input-group">
                     <span class="input-group-text" id="price-label">$</span>
                     <input type="text" class="form-control" placeholder="0" aria-label="Price" name="campground[price]" id="price" aria-describedby="price-label" required>
@@ -29,18 +29,12 @@
                 <textarea class="form-control" type="text" name="campground[description]" id="description" required></textarea>  
             </div>
 
-            <div class="mb-3">
-                <label class="form-label" for="image">Images</label>
-                <div class="form-file custom-file">
-                    <input type="file" class="form-file-input" id="image" name="image" multiple>
-                    <label class="form-file-label" for="image">
-                        <!-- <span class="form-file-text custom-file-label">Choose image(s)...</span> -->
-                        <!-- <span class="form-file-button">Browse</span> -->
-                    </label>
-                </div>
+            <div class="mb-3 custom-file">
+                <label for="image" class="form-label">
+                    <span class="form-file-text custom-file-label">Choose image(s)...</span> 
+                </label>
+                <input class="form-control" type="file" id="image" name="image" multiple>
             </div>
-            
-
             <button class="btn btn-success">Add campground</button>
         </form>
         <div class="mb-3">
