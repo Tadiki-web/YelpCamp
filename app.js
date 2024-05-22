@@ -34,7 +34,7 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 main().catch(err => console.log(err));
 // mongodb://127.0.0.1:27017/yelp-camp
 async function main() {
-    console.log(dbUrl);
+    // console.log(dbUrl);
     await mongoose.connect(dbUrl);
     console.log('mongo connection open');
     // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
