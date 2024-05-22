@@ -20,14 +20,21 @@ const User= require('./models/user');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 
+const MongoStore = require('connect-mongo');
+
 const campgroundRoutes = require('./routes/campgrounds')
 const reviewRoutes = require('./routes/reviews')
-const userRoutes=require('./routes/users')
+const userRoutes=require('./routes/users');
+const { func } = require('joi');
 
+// const dbUrl= process.env.DB_URL;
+const dbUrl= 'mongodb://127.0.0.1:27017/yelp-camp'
 
 main().catch(err => console.log(err));
+// mongodb://127.0.0.1:27017/yelp-camp
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
+    console.log(dbUrl);
+    await mongoose.connect(dbUrl);
     console.log('mongo connection open');
     // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
   }
@@ -87,10 +94,23 @@ app.use(
 );
 // app.use(helmet())
 
+const store = new MongoStore ({
+    mongoUrl: dbUrl,
+    touchAfter: 24*3600,
+    crypto : {
+        secret: 'secretCheck'
+    }
+})
+
+store.on("error",  (e)=>{
+    console.log("session error: ", e);
+})
+
 
 const sessionConfig = {
     //can also provide a name for the cookie, default session id is connect.sid, 
     // but the key "name" can be used to change it
+    store,
     secret: 'secretCheck',
     resave: false,
     saveUninitialized: true,
