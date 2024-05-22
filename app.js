@@ -27,8 +27,9 @@ const reviewRoutes = require('./routes/reviews')
 const userRoutes=require('./routes/users');
 const { func } = require('joi');
 
-// const dbUrl= process.env.DB_URL;
-const dbUrl= 'mongodb://127.0.0.1:27017/yelp-camp'
+const dbUrl= process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp-camp'
+const secret = process.env.SECRET || 'thisshouldbeabettersecret';
+// const dbUrl= 'mongodb://127.0.0.1:27017/yelp-camp'
 
 main().catch(err => console.log(err));
 // mongodb://127.0.0.1:27017/yelp-camp
@@ -98,7 +99,7 @@ const store = new MongoStore ({
     mongoUrl: dbUrl,
     touchAfter: 24*3600,
     crypto : {
-        secret: 'secretCheck'
+        secret: secret
     }
 })
 
@@ -111,7 +112,7 @@ const sessionConfig = {
     //can also provide a name for the cookie, default session id is connect.sid, 
     // but the key "name" can be used to change it
     store,
-    secret: 'secretCheck',
+    secret: secret,
     resave: false,
     saveUninitialized: true,
     cookie:{
@@ -164,5 +165,5 @@ app.use((err,req,res,next)=>{
 
 })
 
-
-app.listen(3000, ()=> console.log('serving on port 3000'))
+const port = process.env.PORT||3000;
+app.listen(port, ()=> console.log(`serving on port ${port}`))
